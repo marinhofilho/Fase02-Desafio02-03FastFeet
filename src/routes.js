@@ -24,8 +24,13 @@ routes.get('/deliverymen', DeliverymenController.index);
 routes.put('/deliverymen/:id', DeliverymenController.update);
 routes.delete('/deliverymen/:id', DeliverymenController.delete);
 
+routes.get('/deliverymen/:id', DeliverymenController.indexOne);
+
 routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/orders', OrderController.store);
+routes.put('/orders/:id', OrderController.update);
+routes.delete('/orders/:id', OrderController.delete);
+routes.get('/orders/', OrderController.index);
 
 export default routes;
