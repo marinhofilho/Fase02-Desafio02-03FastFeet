@@ -32,7 +32,14 @@ class DeliverymenController {
   }
 
   async index(req, res) {
-    const deliverymen = await Deliverymen.findAll({});
+    const deliverymen = await Deliverymen.findAll({
+      include: [
+        {
+          model: Order,
+          as: 'orders',
+        },
+      ],
+    });
     return res.json(deliverymen);
   }
 
