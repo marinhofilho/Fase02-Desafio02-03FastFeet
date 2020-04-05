@@ -7,8 +7,9 @@ import SessionController from './app/controllers/SessionController';
 import DeliverymenController from './app/controllers/DeliverymenController';
 import FileController from './app/controllers/FileController';
 import OrderController from './app/controllers/OrderController';
-import DeliverymenDashboard from './app/controllers/DeliverymenDashboard';
 import DeliveriesController from './app/controllers/DeliveriesController';
+import DeliverymenDashboard from './app/controllers/DeliverymenDashboard';
+import DeliveredOrder from './app/controllers/DeliveredOrder';
 
 import NotificationController from './app/controllers/NotificationController';
 
@@ -19,6 +20,11 @@ const upload = multer(multerConfig);
 
 routes.get('/deliverymen/:id/deliveries', DeliverymenDashboard.show);
 routes.put('/deliverymen/:id/deliveries/:orderId', DeliverymenDashboard.update);
+
+routes.put(
+  '/deliverymen/:id/deliveries/:orderId/delivered',
+  DeliveredOrder.update
+);
 
 routes.put('/deliverymen/:id/deliveries/:orderId', DeliveriesController.update);
 routes.post('/sessions', SessionController.store);
