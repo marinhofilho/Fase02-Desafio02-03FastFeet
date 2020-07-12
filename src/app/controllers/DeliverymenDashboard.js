@@ -3,6 +3,7 @@ import Order from '../models/Order';
 
 class DeliverymenDashboard {
   async show(req, res) {
+    // show orders not yet delivered
     const { id } = req.params;
     const deliverymen = await Deliverymen.findOne({
       where: { id },
@@ -12,13 +13,7 @@ class DeliverymenDashboard {
           model: Order,
           as: 'orders',
           where: { canceled_at: null, end_date: null },
-          attributes: [
-            'id',
-            'product',
-            'start_date',
-            'signature_id',
-            'delivered',
-          ],
+          attributes: ['id', 'product', 'start_date', 'signature_id'],
         },
       ],
     });
@@ -43,13 +38,14 @@ class DeliverymenDashboard {
 
     const entryDate = new Date(start_date);
     const entryDateHour = entryDate.getHours();
+    console.log(entryDateHour);
 
     if (entryDateHour < 8) {
       return res
         .status(400)
         .json({ error: 'You are too soon, come back at 8am' });
     }
-    if (entryDateHour < 8) {
+    if (entryDateHour > 18) {
       return res
         .status(400)
         .json({ error: 'You are past 6pm, come back tomorrow' });

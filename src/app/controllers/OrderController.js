@@ -21,7 +21,6 @@ class OrderController {
         'start_date',
         'end_date',
         'signature_id',
-        'delivered',
       ],
       include: [
         {
