@@ -43,6 +43,7 @@ routes.use(authMiddleware);
 // Recipients routes
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:id', RecipientController.update);
+routes.get('/recipients', RecipientController.index);
 
 // Deliveryboys routes
 routes.post('/deliverymen', DeliverymenController.store);
@@ -56,7 +57,7 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.post('/orders', OrderController.store);
 routes.put('/orders/:id', OrderController.update);
 routes.delete('/orders/:id', OrderController.delete);
-routes.get('/orders/', OrderController.index);
+routes.get('/orders', OrderController.index);
 
 // Notification routes
 routes.get('/notifications', NotificationController.index);

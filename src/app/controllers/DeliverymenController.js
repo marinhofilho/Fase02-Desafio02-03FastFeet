@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Deliverymen from '../models/Deliverymen';
 import Order from '../models/Order';
 
@@ -8,14 +9,14 @@ class DeliverymenController {
 
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      avatar_id: Yup.string().required(),
+      avatar_id: Yup.number().required(),
       email: Yup.string()
         .email()
         .required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation failed' });
+      return res.status(400).json({ error: 'Backend validation failed' });
     }
 
     const DeliverymenExists = await Deliverymen.findOne({
@@ -32,6 +33,21 @@ class DeliverymenController {
   }
 
   async index(req, res) {
+    const { dname } = req.query;
+
+    if (dname) {
+      const deliverymen = await Deliverymen.findAll({
+        where: { name: { [Op.iLike]: `%${dname}%` } },
+        include: [
+          {
+            model: Order,
+            as: 'orders',
+          },
+        ],
+      });
+      return res.json(deliverymen);
+    }
+
     const deliverymen = await Deliverymen.findAll({
       include: [
         {
@@ -43,7 +59,7 @@ class DeliverymenController {
     return res.json(deliverymen);
   }
 
-  async indexOne(req, res) {
+  /*  async indexOne(req, res) {
     const { id } = req.params;
     const deliverymen = await Deliverymen.findOne({
       where: { id },
@@ -59,7 +75,7 @@ class DeliverymenController {
       return res.status(400).json({ error: 'Deliverymen not found' });
     }
     return res.json(deliverymen);
-  }
+  } */
 
   async update(req, res) {
     const { id } = req.params;

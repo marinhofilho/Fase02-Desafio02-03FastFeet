@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { Op } from 'sequelize';
+import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Order from '../models/Order';
 import Recipient from '../models/Recipient';
@@ -13,20 +14,73 @@ import Mail from '../../lib/Mail';
 class OrderController {
   // talvez mudar para listar a order de cada recipient ou de cada deliveryman
   async index(req, res) {
+    const { searchproduct } = req.query;
+
+    if (searchproduct) {
+      const orders = await Order.findAll({
+        where: { product: { [Op.iLike]: `%${searchproduct}%` } },
+        order: [['id', 'DESC']],
+        attributes: [
+          'id',
+          'product',
+          'canceled_at',
+          'start_date',
+          'end_date',
+          'created_at',
+          'signature_id',
+        ],
+        include: [
+          {
+            model: Recipient,
+            as: 'recipient',
+            attributes: [
+              'id',
+              'name',
+              'street',
+              'number',
+              'addition',
+              'city',
+              'state',
+            ],
+          },
+          {
+            model: Deliverymen,
+            as: 'deliverymen',
+            attributes: ['id', 'name', 'email'],
+          },
+          {
+            model: File,
+            as: 'signature',
+          },
+        ],
+      });
+
+      return res.json(orders);
+    }
     const orders = await Order.findAll({
+      order: [['id', 'DESC']],
       attributes: [
         'id',
         'product',
         'canceled_at',
         'start_date',
         'end_date',
+        'created_at',
         'signature_id',
       ],
       include: [
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name'],
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'addition',
+            'city',
+            'state',
+          ],
         },
         {
           model: Deliverymen,
@@ -133,8 +187,9 @@ class OrderController {
     if (!order) {
       return res.status(400).json({ error: 'Order not found' });
     }
-
+    /* FRONT_END: couldn't pass the current date with the body to execute de return message in json
     const { canceled_at } = req.body;
+    console.log(canceled_at);
     order.update(req.body);
 
     const deleteMoment = parseISO(canceled_at);
@@ -142,10 +197,12 @@ class OrderController {
       deleteMoment,
       "'dia' dd 'de' MMMM', às' H:mm'h'",
       { locale: pt }
-    );
-    console.log(deleteFormattedDate);
+    ); */
+
+    await order.destroy();
     return res.json({
-      message: `Order ${order.product} was successfully canceled at ${deleteFormattedDate}`,
+      // message: `Order ${order.product} was successfully canceled at ${deleteFormattedDate}`,
+      message: `Order ${order.product} was successfully canceled.`,
     });
   }
 }
