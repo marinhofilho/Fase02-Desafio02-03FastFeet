@@ -2,22 +2,11 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 import Deliverymen from '../models/Deliverymen';
 import Order from '../models/Order';
+// import File from '../models/File';
 
 class DeliverymenController {
   async store(req, res) {
     const { name } = req.body;
-
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      avatar_id: Yup.number().required(),
-      email: Yup.string()
-        .email()
-        .required(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Backend validation failed' });
-    }
 
     const DeliverymenExists = await Deliverymen.findOne({
       where: { name },
@@ -27,7 +16,25 @@ class DeliverymenController {
       return res.status(400).json({ error: 'Deliverymen already exists!' });
     }
 
+    /* const deliverymen = await Deliverymen.create(req.body, {
+      include: [
+        { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
+      ],
+    }); */
+
     const deliverymen = await Deliverymen.create(req.body);
+
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      avatar_id: Yup.number(),
+      email: Yup.string()
+        .email()
+        .required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Backend validation failed' });
+    }
 
     return res.json(deliverymen);
   }

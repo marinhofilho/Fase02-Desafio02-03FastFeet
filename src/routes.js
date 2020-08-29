@@ -10,8 +10,8 @@ import OrderController from './app/controllers/OrderController';
 import DeliveriesController from './app/controllers/DeliveriesController';
 import DeliverymenDashboard from './app/controllers/DeliverymenDashboard';
 import DeliveredListController from './app/controllers/DeliveredListController';
-
 import NotificationController from './app/controllers/NotificationController';
+import ProblemController from './app/controllers/ProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -44,6 +44,7 @@ routes.use(authMiddleware);
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:id', RecipientController.update);
 routes.get('/recipients', RecipientController.index);
+routes.delete('/recipients/:id', RecipientController.delete);
 
 // Deliveryboys routes
 routes.post('/deliverymen', DeliverymenController.store);
@@ -62,5 +63,9 @@ routes.get('/orders', OrderController.index);
 // Notification routes
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
+
+// Problem routes
+routes.get('/problems', ProblemController.index);
+routes.post('/problems', ProblemController.store);
 
 export default routes;

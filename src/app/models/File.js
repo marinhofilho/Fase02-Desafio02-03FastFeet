@@ -6,6 +6,13 @@ class File extends Model {
       {
         name: Sequelize.STRING,
         path: Sequelize.STRING,
+        url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `http://localhost:3334/files/${this.path}`;
+          },
+          // url in the model gave me access to the preview in the deliverymen/new (creation/store)
+        },
       },
       {
         sequelize,
