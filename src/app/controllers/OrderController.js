@@ -7,6 +7,7 @@ import Recipient from '../models/Recipient';
 import Deliverymen from '../models/Deliverymen';
 import File from '../models/File';
 import Notification from '../schemas/Notification';
+import Problem from '../models/Problem';
 
 import Mail from '../../lib/Mail';
 
@@ -95,6 +96,58 @@ class OrderController {
     });
 
     return res.json(orders);
+  }
+
+  async show(req, res) {
+    const order = await Order.findByPk(req.params.id, {
+      attributes: [
+        'id',
+        'recipient_id',
+        'deliverymen_id',
+        'signature_id',
+        'product',
+        'canceled_at',
+        'start_date',
+        'end_date',
+      ],
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'addition',
+            'state',
+            'city',
+            'cep',
+          ],
+        },
+        {
+          model: Deliverymen,
+          as: 'deliverymen',
+          attibutes: ['id', 'name', 'email'],
+        },
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['name', 'path', 'url'],
+        },
+        /* Error: problem is not associated with Order
+        {
+          model: Problem,
+          as: 'problems',
+          attributes: ['id', 'description', 'createdAt'],
+        }, */
+      ],
+    });
+    if (!order) {
+      return res.status(400).json({ error: 'Order not found' });
+    }
+
+    return res.json(order);
   }
 
   async store(req, res) {
