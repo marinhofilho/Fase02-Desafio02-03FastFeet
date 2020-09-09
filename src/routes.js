@@ -18,6 +18,9 @@ import authMiddleware from './app/middlewares/auth';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+// Creates session
+routes.post('/sessions', SessionController.store);
+
 // show finished deliveries
 routes.get('/deliverymen/:id/deliveriesfinished', DeliveredListController.show);
 
@@ -34,8 +37,7 @@ routes.put(
   DeliveriesController.update
 );
 
-// Creates session
-routes.post('/sessions', SessionController.store);
+
 
 // Below this line registration is required
 routes.use(authMiddleware);
@@ -43,12 +45,14 @@ routes.use(authMiddleware);
 // Recipients routes
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:id', RecipientController.update);
+routes.get('/recipient/:id', RecipientController.show);
 routes.get('/recipients', RecipientController.index);
 routes.delete('/recipients/:id', RecipientController.delete);
 
 // Deliveryboys routes
 routes.post('/deliverymen', DeliverymenController.store);
 routes.get('/deliverymen', DeliverymenController.index);
+routes.get('/deliverymen/:id', DeliverymenController.show);
 routes.put('/deliverymen/:id', DeliverymenController.update);
 routes.delete('/deliverymen/:id', DeliverymenController.delete);
 

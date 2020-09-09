@@ -19,7 +19,7 @@ class SessionController {
     }
 
     const { id, name } = user;
-    // The MD5 hash for fastfeetmario is : 9f3439d2519769f3c4436db76204d546
+    // The MD5 hash for fastfeetv2 is : 0ca0ea12e3561d15d69b2bed899ba3af
     return res.json({
       user: {
         id,

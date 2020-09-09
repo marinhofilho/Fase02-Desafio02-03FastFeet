@@ -66,23 +66,16 @@ class DeliverymenController {
     return res.json(deliverymen);
   }
 
-  /*  async indexOne(req, res) {
-    const { id } = req.params;
-    const deliverymen = await Deliverymen.findOne({
-      where: { id },
-      include: [
-        {
-          model: Order,
-          as: 'order',
-        },
-      ],
+  async show(req, res) {
+    const deliverymen = await Deliverymen.findByPk(req.params.id, {
+      attributes: ['id', 'name', 'avatar_id', 'email'],
     });
 
     if (!deliverymen) {
       return res.status(400).json({ error: 'Deliverymen not found' });
     }
     return res.json(deliverymen);
-  } */
+  }
 
   async update(req, res) {
     const { id } = req.params;

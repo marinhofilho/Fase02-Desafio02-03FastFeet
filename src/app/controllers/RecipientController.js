@@ -37,6 +37,27 @@ class RecipientController {
     return res.json(recipients);
   }
 
+  async show(req, res){
+    const recipient = await Recipient.findByPk(req.params.id, {
+      attributes: [
+        "name",
+        "street",
+        "number",
+        "addition",
+        "state",
+        "city",
+        "cep"
+      ]
+    })
+
+    if(!recipient){
+      return res.status(400).json({ error: 'Destinatário não encontrado'})
+    }
+
+    return res.json(recipient)
+
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),

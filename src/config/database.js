@@ -9,5 +9,5 @@ module.exports = {
     underscored: true,
     underscoredAll: true,
   },
-  port: 5436,
+  port: 5432,
 };
