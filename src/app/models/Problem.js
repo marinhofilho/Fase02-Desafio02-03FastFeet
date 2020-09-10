@@ -4,7 +4,7 @@ class Problem extends Model {
   static init(sequelize) {
     super.init(
       {
-        description: Sequelize.STRING,
+        description: Sequelize.STRING(2048),
       },
       {
         sequelize,
