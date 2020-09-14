@@ -47,7 +47,7 @@ class OrderController {
           {
             model: Deliverymen,
             as: 'deliverymen',
-            attributes: ['id', 'name', 'email'],
+            attributes: ['id', 'name', 'email', 'avatar_id'],
           },
           {
             model: File,
@@ -172,7 +172,8 @@ class OrderController {
       deliverymen_id,
     });
 
-    // Notify Deliverymen about order
+  /* Creation of docker containers of the email data is required!
+  // Notify Deliverymen about order
 
     const recipient = await Recipient.findByPk(recipient_id);
     const orderCreationMoment = order.createdAt;
@@ -190,7 +191,7 @@ class OrderController {
     });
 
     const deliverymen = await Deliverymen.findByPk(deliverymen_id);
-
+    
     Mail.sendMail({
       to: `${deliverymen.name} <${deliverymen.email}>`,
       subject: 'Entrega disponível',
@@ -204,6 +205,7 @@ class OrderController {
         product: order.product,
       },
     });
+    */
 
     return res.json(order);
   }
