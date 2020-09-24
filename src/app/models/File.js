@@ -22,12 +22,16 @@ class File extends Model {
     return this;
   }
 
-  static associate(models) {
+  /* static associate(models) {
     this.hasOne(models.Order, {
       foreignKey: 'signature_id',
       as: 'signature',
     });
-  }
+     hasOne is used when the foreignKey exists on the target model 
+    when working with an existing database it needs to refer the proper 
+    foreignKey 
+     it seems to be duplicated because Order.js has an association with BelongsTo
+  } */
 }
 
 export default File;

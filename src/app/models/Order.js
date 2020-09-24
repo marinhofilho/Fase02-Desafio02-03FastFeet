@@ -22,14 +22,21 @@ class Order extends Model {
       foreignKey: 'recipient_id',
       as: 'recipient',
     });
+    // brings recipient_id to order
     this.belongsTo(models.Deliverymen, {
       foreignKey: 'deliverymen_id',
       as: 'deliverymen',
     });
+    // brings deliverymen_id to order
     this.belongsTo(models.File, {
       foreignKey: 'signature_id',
       as: 'signature',
     });
+    // brings signature_id to order
+    this.hasMany(models.Problem, { 
+      foreignKey: 'order_id', 
+      as: 'problems',
+    })
   }
 }
 

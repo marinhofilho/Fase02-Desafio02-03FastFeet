@@ -4,8 +4,8 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
       },
       name: {
         type: Sequelize.STRING,
@@ -19,10 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      addition: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
+      addition: Sequelize.STRING,
       state: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -32,7 +29,7 @@ module.exports = {
         allowNull: false,
       },
       cep: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {

@@ -52,6 +52,9 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+      delivered: {
+        type: Sequelize.BOOLEAN,
+      }
     });
   },
 

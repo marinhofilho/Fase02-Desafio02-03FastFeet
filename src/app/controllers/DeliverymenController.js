@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 import Deliverymen from '../models/Deliverymen';
 import Order from '../models/Order';
+import File from '../models/File';
 // import File from '../models/File';
 
 class DeliverymenController {
@@ -50,10 +51,15 @@ class DeliverymenController {
             model: Order,
             as: 'orders',
           },
+          {
+            model: File,
+            as: 'avatar',
+          }
         ],
       });
       return res.json(deliverymen);
     }
+    
 
     const deliverymen = await Deliverymen.findAll({
       include: [
@@ -61,6 +67,10 @@ class DeliverymenController {
           model: Order,
           as: 'orders',
         },
+        {
+          model: File,
+          as: 'avatar',
+        }
       ],
     });
     return res.json(deliverymen);

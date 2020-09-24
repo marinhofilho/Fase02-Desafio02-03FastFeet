@@ -15,11 +15,11 @@ class User extends Model {
       }
     );
 
-    /* this.addHook('beforeSave', async user => {
+     this.addHook('beforeSave', async user => {
       if (user.password_hash) {
         user.password_hash = await bcrypt.hash(user.password_hash, 8);
       }
-    }); */
+    });
 
     return this;
   }

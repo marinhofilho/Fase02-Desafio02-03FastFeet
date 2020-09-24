@@ -42,17 +42,31 @@ class OrderController {
               'addition',
               'city',
               'state',
+              'cep'
             ],
           },
           {
             model: Deliverymen,
             as: 'deliverymen',
             attributes: ['id', 'name', 'email', 'avatar_id'],
+            include: [
+              {
+                model: File,
+                as: 'avatar',
+                attributes: ['name', 'path', 'url']
+              },
+            ],
           },
           {
             model: File,
             as: 'signature',
+            attributes: ['name', 'path', 'url']
           },
+          {
+            model: Problem,
+            as: 'problems',
+            attributes: ['id', 'description', 'createdAt']
+          }
         ],
       });
 
@@ -81,17 +95,31 @@ class OrderController {
             'addition',
             'city',
             'state',
+            'cep'
           ],
         },
         {
           model: Deliverymen,
           as: 'deliverymen',
           attributes: ['id', 'name', 'email'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['name', 'path', 'url']
+            },
+          ],
         },
         {
           model: File,
           as: 'signature',
+          attributes: ['name', 'path', 'url']
         },
+        {
+          model: Problem,
+          as: 'problems',
+          attributes: ['id', 'description', 'createdAt']
+        }
       ],
     });
 
