@@ -22,12 +22,16 @@ class Order extends Model {
       foreignKey: 'recipient_id',
       as: 'recipient',
     });
-    // brings recipient_id to order
+    /* belongsTo is a one-to-one association where the foreign key for the
+    relation exists in the source model (Order - this) */
+    // brings recipient_id (primary key) to order
+
     this.belongsTo(models.Deliverymen, {
       foreignKey: 'deliverymen_id',
       as: 'deliverymen',
     });
     // brings deliverymen_id to order
+    // by default it sucks the primary key of the target model
     this.belongsTo(models.File, {
       foreignKey: 'signature_id',
       as: 'signature',

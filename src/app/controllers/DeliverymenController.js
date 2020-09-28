@@ -46,6 +46,7 @@ class DeliverymenController {
     if (dname) {
       const deliverymen = await Deliverymen.findAll({
         where: { name: { [Op.iLike]: `%${dname}%` } },
+        order: [['id', 'ASC']],
         include: [
           {
             model: Order,
@@ -62,6 +63,7 @@ class DeliverymenController {
     
 
     const deliverymen = await Deliverymen.findAll({
+      order: [['id', 'ASC']],
       include: [
         {
           model: Order,
@@ -79,6 +81,16 @@ class DeliverymenController {
   async show(req, res) {
     const deliverymen = await Deliverymen.findByPk(req.params.id, {
       attributes: ['id', 'name', 'avatar_id', 'email'],
+      include: [
+        {
+          model: Order,
+          as: 'orders',
+        },
+        {
+          model: File,
+          as: 'avatar',
+        }
+      ],      
     });
 
     if (!deliverymen) {

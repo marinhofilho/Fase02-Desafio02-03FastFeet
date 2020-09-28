@@ -20,7 +20,7 @@ class OrderController {
     if (searchproduct) {
       const orders = await Order.findAll({
         where: { product: { [Op.iLike]: `%${searchproduct}%` } },
-        order: [['id', 'DESC']],
+        order: [['id', 'ASC']],
         attributes: [
           'id',
           'product',
@@ -73,7 +73,7 @@ class OrderController {
       return res.json(orders);
     }
     const orders = await Order.findAll({
-      order: [['id', 'DESC']],
+      order: [['id', 'ASC']],
       attributes: [
         'id',
         'product',

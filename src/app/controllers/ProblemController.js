@@ -5,7 +5,7 @@ import Order from '../models/Order';
 class ProblemController {
   async index(req, res) {
     const problems = await Problem.findAll({
-      order: [['created_at', 'ASC']],
+      order: [['id', 'ASC']],
       include: [
         {
           model: Order,

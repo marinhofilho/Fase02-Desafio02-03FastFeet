@@ -9,6 +9,7 @@ class RecipientController {
     if (recipientName) {
       const recipients = await Recipient.findAll({
         where: { name: { [Op.iLike]: `%${recipientName}%` } },
+        order: [['id', 'ASC']],
         attributes: [
           'id',
           'name',
@@ -39,6 +40,7 @@ class RecipientController {
 
   async show(req, res){
     const recipient = await Recipient.findByPk(req.params.id, {
+      order: [['id', 'ASC']],
       attributes: [
         "name",
         "street",
@@ -66,7 +68,7 @@ class RecipientController {
       addition: Yup.string(),
       state: Yup.string().required(),
       city: Yup.string().required(),
-      cep: Yup.number().required(),
+      cep: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
