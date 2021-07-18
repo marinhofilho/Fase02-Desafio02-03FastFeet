@@ -1,6 +1,7 @@
 import sequelize from 'sequelize';
 import Deliverymen from '../models/Deliverymen';
 import Order from '../models/Order';
+import Recipient from '../models/Recipient';
 
 class DeliveredListController {
   async show(req, res) {
@@ -19,8 +20,26 @@ class DeliveredListController {
             'product',
             'start_date',
             'signature_id',
-            'end_date',
+            'created_at',
+            'canceled_at',
             'signature_id',
+            'end_date',
+          ],
+          include: [
+            {
+              model: Recipient,
+              as: 'recipient',
+              attributes: [
+                'id',
+                'name',
+                'street',
+                'number',
+                'addition',
+                'city',
+                'state',
+                'cep',
+              ],
+            },
           ],
         },
       ],

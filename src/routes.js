@@ -12,11 +12,15 @@ import DeliverymenDashboard from './app/controllers/DeliverymenDashboard';
 import DeliveredListController from './app/controllers/DeliveredListController';
 import NotificationController from './app/controllers/NotificationController';
 import ProblemController from './app/controllers/ProblemController';
+import UserController from './app/controllers/UserController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
+
+//
+routes.post('/user', UserController.store);
 
 // Creates session
 routes.post('/sessions', SessionController.store);
@@ -37,7 +41,16 @@ routes.put(
   DeliveriesController.update
 );
 
+// needed to access mobile app
+routes.get('/deliverymen/:id', DeliverymenController.show);
 
+// Problem routes
+routes.get('/problems', ProblemController.index);
+routes.get('/problems/:id', ProblemController.show);
+routes.post('/problems', ProblemController.store);
+
+// Files posting - Deliverymen Creation and Order Confirm
+routes.post('/files', upload.single('file'), FileController.store);
 
 // Below this line registration is required
 routes.use(authMiddleware);
@@ -52,11 +65,8 @@ routes.delete('/recipients/:id', RecipientController.delete);
 // Deliveryboys routes
 routes.post('/deliverymen', DeliverymenController.store);
 routes.get('/deliverymen', DeliverymenController.index);
-routes.get('/deliverymen/:id', DeliverymenController.show);
 routes.put('/deliverymen/:id', DeliverymenController.update);
 routes.delete('/deliverymen/:id', DeliverymenController.delete);
-
-routes.post('/files', upload.single('file'), FileController.store);
 
 // Order manipulation routes
 routes.post('/orders', OrderController.store);
@@ -68,9 +78,5 @@ routes.get('/orders/:id', OrderController.show);
 // Notification routes
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
-
-// Problem routes
-routes.get('/problems', ProblemController.index);
-routes.post('/problems', ProblemController.store);
 
 export default routes;

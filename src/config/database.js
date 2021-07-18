@@ -4,10 +4,10 @@ module.exports = {
   username: 'postgres',
   password: 'docker',
   database: 'fastfeet',
+  port: 5432,
   define: {
     timestamps: true,
     underscored: true,
     underscoredAll: true,
   },
-  port: 5432,
 };

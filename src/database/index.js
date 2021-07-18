@@ -15,7 +15,7 @@ const models = [Recipient, User, Deliverymen, File, Order, Problem];
 class Database {
   constructor() {
     this.init();
-    this.mongo();
+    // this.mongo();
   }
 
   init() {
@@ -26,16 +26,16 @@ class Database {
       .map(model => model.associate && model.associate(this.connection.models));
   }
 
-  mongo() {
+  /* mongo() {
     this.mongoConnection = mongoose.connect(
-      'mongodb://localhost:27018/fastfeet',
+      'mongodb://localhost:27017/fastfeet',
       {
         useNewUrlParser: true,
         useFindAndModify: true,
         useUnifiedTopology: true,
       }
     );
-  }
+  } */
 }
 
 export default new Database();

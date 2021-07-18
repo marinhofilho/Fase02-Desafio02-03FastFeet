@@ -17,6 +17,15 @@ class ProblemController {
     return res.json(problems);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+    const problems = await Problem.findAll({
+      where: { order_id: id },
+      attributes: ['description', 'created_at'],
+    });
+    return res.json(problems);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       description: Yup.string().required(),

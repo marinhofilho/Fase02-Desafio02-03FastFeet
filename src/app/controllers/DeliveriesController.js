@@ -5,6 +5,7 @@ import File from '../models/File';
 class DeliveriesController {
   async update(req, res) {
     const { orderId } = req.params;
+    console.log(orderId);
     const order = await Order.findOne({
       where: { id: orderId },
     });
@@ -14,16 +15,16 @@ class DeliveriesController {
     }
     // const { end_date }
 
-    const { originalname: name, filename: path } = req.file;
+    /* const { originalname: name, filename: path } = req.file;
 
     const file = await File.create({
       name,
       path,
-    });
+    }); */
 
-    await order.update(req.body);
+    const updatedOrder = await order.update(req.body);
 
-    return res.json(order + file);
+    return res.json(updatedOrder);
   }
 }
 export default new DeliveriesController();

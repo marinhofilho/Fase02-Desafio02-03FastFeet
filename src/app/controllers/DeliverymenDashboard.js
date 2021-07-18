@@ -1,5 +1,6 @@
 import Deliverymen from '../models/Deliverymen';
 import Order from '../models/Order';
+import Recipient from '../models/Recipient';
 
 class DeliverymenDashboard {
   async show(req, res) {
@@ -13,7 +14,32 @@ class DeliverymenDashboard {
           model: Order,
           as: 'orders',
           where: { canceled_at: null, end_date: null },
-          attributes: ['id', 'product', 'start_date', 'signature_id'],
+          attributes: [
+            'id',
+            'product',
+            'start_date',
+            'signature_id',
+            'created_at',
+            'canceled_at',
+            'signature_id',
+            'end_date',
+          ],
+          include: [
+            {
+              model: Recipient,
+              as: 'recipient',
+              attributes: [
+                'id',
+                'name',
+                'street',
+                'number',
+                'addition',
+                'city',
+                'state',
+                'cep',
+              ],
+            },
+          ],
         },
       ],
     });

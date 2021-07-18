@@ -55,12 +55,11 @@ class DeliverymenController {
           {
             model: File,
             as: 'avatar',
-          }
+          },
         ],
       });
       return res.json(deliverymen);
     }
-    
 
     const deliverymen = await Deliverymen.findAll({
       order: [['id', 'ASC']],
@@ -72,7 +71,7 @@ class DeliverymenController {
         {
           model: File,
           as: 'avatar',
-        }
+        },
       ],
     });
     return res.json(deliverymen);
@@ -80,7 +79,7 @@ class DeliverymenController {
 
   async show(req, res) {
     const deliverymen = await Deliverymen.findByPk(req.params.id, {
-      attributes: ['id', 'name', 'avatar_id', 'email'],
+      attributes: ['id', 'name', 'avatar_id', 'email', 'created_at'],
       include: [
         {
           model: Order,
@@ -89,8 +88,8 @@ class DeliverymenController {
         {
           model: File,
           as: 'avatar',
-        }
-      ],      
+        },
+      ],
     });
 
     if (!deliverymen) {
